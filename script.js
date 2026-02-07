@@ -3,16 +3,17 @@
 // ===============================
 const correctName = "aathmika";
 const correctNick = "petni";
-const PREVIEW_DAY = null; // set to 8 to test Propose Day
+const PREVIEW_DAY = null; // KEEP NULL FOR LIVE
 
 // ===============================
 // 🖼️ DAY-WISE PROFILE IMAGES
 // ===============================
 const dayImages = {
-  7: "images/her-7.jpeg", // Rose Day
-  8: "images/her-8.jpeg", // Propose Day
+  7: "images/her-7.jpeg",
+  8: "images/her-8.jpeg",
 };
 
+// ===============================
 let selectedDate = null;
 let autoInterval = null;
 
@@ -60,7 +61,7 @@ function selectDate(day, btn) {
 }
 
 // ===============================
-// 🕒 GET TODAY DATE IN IST
+// 🕒 GET TODAY DATE (IST)
 // ===============================
 function getTodayISTDate() {
   if (PREVIEW_DAY !== null) return PREVIEW_DAY;
@@ -75,7 +76,7 @@ function getTodayISTDate() {
 }
 
 // ===============================
-// 🔓 UNLOCK
+// 🔓 UNLOCK (FINAL LOGIC)
 // ===============================
 function unlock() {
   const name = herName.value.toLowerCase().trim();
@@ -87,7 +88,8 @@ function unlock() {
     return;
   }
 
-  if (selectedDate !== getTodayISTDate()) {
+  // ✅ FIXED RULE: block ONLY future days
+  if (selectedDate > getTodayISTDate()) {
     alert("Umm I see you are trying to be smart!! But you gotta wait!! 😌");
     return;
   }
@@ -97,7 +99,7 @@ function unlock() {
     choiceScreen.classList.remove("hidden");
     window.ACTIVE_DAY = selectedDate;
 
-    // 🔁 UPDATE PROFILE IMAGE BASED ON DAY
+    // Update profile pic
     const profileImg = document.querySelector(".profilePic");
     if (dayImages[window.ACTIVE_DAY]) {
       profileImg.src = dayImages[window.ACTIVE_DAY];
@@ -108,7 +110,7 @@ function unlock() {
 }
 
 // ===============================
-// 🎁 OPEN GIFT (DAY-WISE)
+// 🎁 GIFT (DAY-WISE)
 // ===============================
 function openGift() {
   if (window.ACTIVE_DAY === 7) {
@@ -131,7 +133,7 @@ function goBack() {
 }
 
 // ===============================
-// ✉️ OPEN ENVELOPE (DAY-WISE)
+// ✉️ ENVELOPE (DAY-WISE)
 // ===============================
 function openEnvelope() {
   if (window.ACTIVE_DAY === 8) {
@@ -166,7 +168,7 @@ Like you.
 }
 
 // ===============================
-// 💌 PROPOSE DAY ENVELOPE FLOW
+// 💌 PROPOSE DAY FLOW
 // ===============================
 function openProposeFlow() {
   const overlay = document.createElement("div");
@@ -220,7 +222,7 @@ how this felt.
 }
 
 // ===============================
-// 💗 PROPOSE DAY GIFT (HEART + UNSENT)
+// 💗 PROPOSE DAY GIFT
 // ===============================
 function openProposeGift() {
   const overlay = document.createElement("div");
@@ -240,7 +242,7 @@ function openProposeGift() {
   const hintBtn = document.createElement("div");
   hintBtn.textContent = "Some feelings don’t need words yet.";
   hintBtn.style.cssText =
-    "display:inline-block;background:#ffb6c9;color:#7a003c;padding:10px 16px;border-radius:999px;font-size:0.85rem;cursor:pointer;user-select:none";
+    "display:inline-block;background:#ffb6c9;color:#7a003c;padding:10px 16px;border-radius:999px;font-size:0.85rem;cursor:pointer";
 
   card.append(heart, hintBtn);
   overlay.appendChild(card);
@@ -249,9 +251,9 @@ function openProposeGift() {
   const style = document.createElement("style");
   style.textContent = `
     @keyframes pulse {
-      0% { transform: scale(1); opacity: 0.85; }
+      0% { transform: scale(1); opacity: .85; }
       50% { transform: scale(1.15); opacity: 1; }
-      100% { transform: scale(1); opacity: 0.85; }
+      100% { transform: scale(1); opacity: .85; }
     }
   `;
   document.head.appendChild(style);
@@ -269,17 +271,17 @@ function openUnsentOverlay() {
 
   const bubble = document.createElement("div");
   bubble.style.cssText =
-    "background:#fff;border-radius:20px;padding:22px 26px;font-family:Georgia;color:#6a0572;font-size:0.95rem;box-shadow:0 8px 25px rgba(0,0,0,0.25)";
+    "background:#fff;border-radius:20px;padding:22px 26px;font-family:Georgia;color:#6a0572;font-size:0.95rem";
 
   overlay.appendChild(bubble);
   document.body.appendChild(overlay);
 
-  const message = "I was going to ask you if—";
+  const msg = "I was going to ask you if—";
   let i = 0;
 
   const typer = setInterval(() => {
-    bubble.textContent += message[i++];
-    if (i >= message.length) {
+    bubble.textContent += msg[i++];
+    if (i >= msg.length) {
       clearInterval(typer);
       setTimeout(() => eraseMessage(bubble, overlay), 900);
     }
@@ -292,7 +294,7 @@ function eraseMessage(bubble, overlay) {
   const eraser = setInterval(() => {
     text = text.slice(0, -1);
     bubble.textContent = text;
-    if (text.length === 0) {
+    if (!text.length) {
       clearInterval(eraser);
       bubble.textContent = "Not today.";
       setTimeout(() => overlay.remove(), 1200);
@@ -301,7 +303,7 @@ function eraseMessage(bubble, overlay) {
 }
 
 // ===============================
-// 📜 LETTER RENDER (SHARED)
+// 📜 LETTER RENDER
 // ===============================
 function openLetter(message) {
   const overlay = document.createElement("div");
@@ -356,7 +358,7 @@ function autoAddRoses() {
   if (autoInterval) return;
   autoInterval = setInterval(() => {
     addRose(Math.random() * innerWidth, Math.random() * innerHeight);
-    if (document.querySelectorAll(".rose").length >= 15000) {
+    if (document.querySelectorAll(".rose").length >= 300) {
       clearInterval(autoInterval);
       autoInterval = null;
     }
