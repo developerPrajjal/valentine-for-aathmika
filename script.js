@@ -3,7 +3,7 @@
 // ===============================
 const correctName = "aathmika";
 const correctNick = "petni";
-const PREVIEW_DAY = 8; // set to 8 to test Propose Day
+const PREVIEW_DAY = null; // set to 8 to test Propose Day
 
 // ===============================
 // 🖼️ DAY-WISE PROFILE IMAGES
@@ -362,3 +362,4 @@ function autoAddRoses() {
     }
   }, 160);
 }
+
