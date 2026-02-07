@@ -95,9 +95,26 @@ function unlock() {
   }
 
   if (name === correctName && nick === correctNick) {
-    lockScreen.classList.add("hidden");
-    choiceScreen.classList.remove("hidden");
-    window.ACTIVE_DAY = selectedDate;
+  lockScreen.classList.add("hidden");
+  choiceScreen.classList.remove("hidden");
+  window.ACTIVE_DAY = selectedDate;
+
+  // 🎵 PLAY BACKGROUND MUSIC (after user interaction)
+  const music = document.getElementById("bgMusic");
+  if (music) {
+    music.volume = 0.5; // soft romantic volume
+    music.play().catch(() => {
+      console.log("Autoplay blocked until interaction");
+    });
+  }
+
+  // 🖼️ Update profile image
+  const profileImg = document.querySelector(".profilePic");
+  if (dayImages[window.ACTIVE_DAY]) {
+    profileImg.src = dayImages[window.ACTIVE_DAY];
+  }
+}
+
 
     // Update profile pic
     const profileImg = document.querySelector(".profilePic");
@@ -364,3 +381,4 @@ function autoAddRoses() {
     }
   }, 160);
 }
+
