@@ -1,0 +1,630 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+body {
+  height: 100vh;
+  background: radial-gradient(circle at top, #ff4d6d, #6a0572);
+  overflow: hidden;
+  color: white;
+}
+
+/* Center container */
+.container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  background: rgba(255, 255, 255, 0.12);
+  padding: 30px;
+  border-radius: 22px;
+  backdrop-filter: blur(12px);
+  width: 90%;
+  max-width: 380px;
+}
+
+h1 {
+  margin-bottom: 15px;
+}
+
+input {
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0;
+  border-radius: 12px;
+  border: none;
+  outline: none;
+}
+
+button {
+  padding: 12px 28px;
+  border: none;
+  border-radius: 20px;
+  background: #ffd6e0;
+  color: #6a0572;
+  font-size: 16px;
+  cursor: pointer;
+  margin-top: 15px;
+}
+
+#error {
+  margin-top: 10px;
+  color: #ffe3ea;
+}
+
+.hidden {
+  display: none;
+}
+
+/* Image gallery */
+#imageGallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 15px;
+  margin: 20px 0;
+}
+
+#imageGallery img {
+  width: 100%;
+  border-radius: 18px;
+  object-fit: cover;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.35);
+  animation: fadeIn 1.2s ease;
+}
+
+#dayMessage {
+  margin-top: 10px;
+  font-size: 1rem;
+}
+
+/* Hearts */
+.heart {
+  position: absolute;
+  color: pink;
+  font-size: 20px;
+  animation: floatUp 6s linear infinite;
+}
+
+@keyframes floatUp {
+  from {
+    transform: translateY(100vh) scale(1);
+    opacity: 1;
+  }
+  to {
+    transform: translateY(-10vh) scale(1.6);
+    opacity: 0;
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+body {
+  margin: 0;
+  height: 100vh;
+  background: radial-gradient(circle at top, #ff4d6d, #6a0572);
+  overflow: hidden;
+  font-family: 'Segoe UI', sans-serif;
+  color: white;
+}
+
+/* Center containers */
+.container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(255,255,255,0.12);
+  backdrop-filter: blur(12px);
+  padding: 30px;
+  border-radius: 22px;
+  text-align: center;
+  width: 90%;
+  max-width: 380px;
+}
+
+.hidden { display: none; }
+
+input {
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0;
+  border-radius: 12px;
+  border: none;
+}
+
+button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 18px;
+  background: #ffd6e0;
+  color: #6a0572;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+/* Profile */
+.profilePic {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 15px;
+}
+
+/* Choice icons */
+.choices {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 20px;
+}
+
+.choices img {
+  width: 70px;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.choices img:hover {
+  transform: scale(1.1);
+}
+
+/* Garden */
+#gardenScreen {
+  position: fixed;
+  inset: 0;
+  background: linear-gradient(#7bcf9a, #3a7d44);
+  overflow: hidden;
+}
+
+.controls {
+  position: fixed;
+  top: 15px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+}
+
+.controls button {
+  margin: 0 5px;
+}
+
+/* Roses */
+.rose {
+  position: absolute;
+  font-size: 28px;
+  animation: bloom 0.6s ease;
+}
+
+@keyframes bloom {
+  from { transform: scale(0); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+/* Floating hearts */
+.heart {
+  position: absolute;
+  color: pink;
+  animation: floatUp 6s linear infinite;
+}
+
+@keyframes floatUp {
+  from { transform: translateY(100vh); opacity: 1; }
+  to { transform: translateY(-10vh); opacity: 0; }
+}
+.dateButtons {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  margin: 15px 0;
+}
+
+.dateButtons button {
+  padding: 8px;
+  font-size: 0.85rem;
+  border-radius: 12px;
+  background: rgba(255,255,255,0.2);
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.dateButtons button.selected {
+  background: #ffd6e0;
+  color: #6a0572;
+  font-weight: 600;
+}
+
+.small {
+  font-size: 0.8rem;
+  opacity: 0.8;
+}
+
+.enterBtn {
+  margin-top: 10px;
+}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+body {
+  height: 100vh;
+  overflow: hidden;
+  background: radial-gradient(circle at top, #ff4d6d, #6a0572);
+  color: white;
+}
+
+/* ---------- Containers ---------- */
+.container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(255,255,255,0.12);
+  backdrop-filter: blur(12px);
+  padding: 30px;
+  border-radius: 22px;
+  text-align: center;
+  width: 90%;
+  max-width: 380px;
+}
+
+.hidden { display: none; }
+
+/* ---------- Inputs & Buttons ---------- */
+input {
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0;
+  border-radius: 12px;
+  border: none;
+}
+
+button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 18px;
+  background: #ffd6e0;
+  color: #6a0572;
+  cursor: pointer;
+}
+
+/* ---------- Date buttons ---------- */
+.dateButtons {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  margin: 15px 0;
+}
+
+.dateButtons button.selected {
+  background: #ffb3c6;
+  font-weight: 600;
+}
+
+/* ---------- Choice Page ---------- */
+.profilePic {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 15px;
+}
+
+.choices {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 20px;
+}
+
+.choices img {
+  width: 70px;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.choices img:hover {
+  transform: scale(1.1);
+}
+
+/* ---------- GARDEN ---------- */
+#gardenScreen {
+  position: fixed;
+  inset: 0;
+  background: linear-gradient(to top, #2f6f4e, #9dd6a3);
+  overflow: hidden;
+}
+
+/* Control bar */
+.controls {
+  position: fixed;
+  top: 15px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 100;
+}
+
+.controls button {
+  margin: 0 6px;
+}
+
+/* ---------- ROSES ---------- */
+.rose {
+  position: absolute;
+  width: var(--size);
+  animation: sway 6s ease-in-out infinite;
+  pointer-events: none;
+  filter: drop-shadow(0 8px 12px rgba(0,0,0,0.35));
+}
+
+@keyframes sway {
+  0%   { transform: translateY(0) rotate(var(--rot)); }
+  50%  { transform: translateY(-10px) rotate(calc(var(--rot) + 3deg)); }
+  100% { transform: translateY(0) rotate(var(--rot)); }
+}
+
+/* ---------- FLOATING HEARTS ---------- */
+.heart {
+  position: absolute;
+  color: pink;
+  font-size: 18px;
+  animation: floatUp 6s linear infinite;
+}
+
+@keyframes floatUp {
+  from { transform: translateY(100vh); opacity: 1; }
+  to   { transform: translateY(-10vh); opacity: 0; }
+}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+body {
+  height: 100vh;
+  overflow: hidden;
+  background: radial-gradient(circle at top, #f6e7c1, #4f7f52);
+}
+
+/* ---------- GARDEN ---------- */
+#gardenScreen {
+  position: fixed;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    #2f5d2f 0%,
+    #5f8f3e 45%,
+    #a8d08d 100%
+  );
+  overflow: hidden;
+}
+
+/* ---------- CONTROLS ---------- */
+.controls {
+  position: fixed;
+  top: 15px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 100;
+}
+
+.controls button {
+  padding: 8px 16px;
+  margin: 0 5px;
+  border-radius: 18px;
+  border: none;
+  background: #ffd6e0;
+  color: #6a0572;
+  cursor: pointer;
+}
+
+/* ---------- PLANT ---------- */
+.plant {
+  position: absolute;
+  bottom: 0;
+  pointer-events: none;
+}
+
+/* Stem */
+.stem {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 4px;
+  height: 0;
+  background: linear-gradient(to top, #2f6f4e, #6fbf73);
+  transform-origin: bottom center;
+  animation: growStem 1.2s ease-out forwards;
+}
+
+/* Flower */
+.flower {
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%) scale(0);
+  font-size: var(--size);
+  animation: bloom 0.8s ease-out forwards;
+  animation-delay: 1.2s;
+}
+
+/* Animations */
+@keyframes growStem {
+  from { height: 0; }
+  to { height: var(--height); }
+}
+
+@keyframes bloom {
+  from {
+    transform: translateX(-50%) scale(0);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(-50%) scale(1);
+    opacity: 1;
+  }
+}
+
+/* ---------- FLOATING HEARTS ---------- */
+.heart {
+  position: absolute;
+  color: pink;
+  font-size: 18px;
+  animation: floatUp 6s linear infinite;
+}
+
+@keyframes floatUp {
+  from { transform: translateY(100vh); opacity: 1; }
+  to   { transform: translateY(-10vh); opacity: 0; }
+}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Segoe UI", sans-serif;
+}
+
+body {
+  height: 100vh;
+  overflow: hidden;
+  background: radial-gradient(circle at top, #ff5f8f, #b5179e);
+  color: white;
+}
+
+/* ---------- Containers ---------- */
+.container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(255,255,255,0.18);
+  backdrop-filter: blur(14px);
+  padding: 28px;
+  border-radius: 22px;
+  text-align: center;
+  width: 90%;
+  max-width: 380px;
+}
+
+.hidden { display: none; }
+
+input {
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0;
+  border-radius: 12px;
+  border: none;
+}
+
+button {
+  padding: 10px 18px;
+  border-radius: 18px;
+  border: none;
+  background: #ffd6e0;
+  color: #6a0572;
+  cursor: pointer;
+}
+
+.small {
+  font-size: 0.8rem;
+  opacity: 0.85;
+}
+
+/* ---------- Date buttons ---------- */
+.dateButtons {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  margin: 15px 0;
+}
+
+.dateButtons button.selected {
+  background: #ffb3c6;
+  font-weight: 600;
+}
+
+/* ---------- Choice Page ---------- */
+.profileCircle {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.5rem;
+  margin: 0 auto 15px;
+}
+
+.choices {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 20px;
+}
+
+.choice {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.choice:hover {
+  transform: scale(1.1);
+}
+
+/* ---------- ROSE GARDEN ---------- */
+#gardenScreen {
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(circle at top, #ff9bbf, #ff4d6d);
+  overflow: hidden;
+}
+
+/* Controls */
+.controls {
+  position: fixed;
+  top: 15px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 100;
+}
+
+.controls button {
+  margin: 0 6px;
+}
+
+/* ---------- ROSES ---------- */
+.rose {
+  position: absolute;
+  font-size: var(--size);
+  animation: pop 0.6s ease-out forwards;
+  filter: drop-shadow(0 8px 14px rgba(0,0,0,0.35));
+}
+
+@keyframes pop {
+  from {
+    transform: scale(0);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
