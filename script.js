@@ -110,11 +110,10 @@ function openGift() {
   }
   if (ACTIVE_DAY === 8) return openProposeGift();
   if (ACTIVE_DAY === 9) return openChocolateGift();
-  alert("This gift opens on the right day 💖");
 }
 
 // ===============================
-// ✉️ ENVELOPE HANDLER (FIXED)
+// ✉️ ENVELOPE HANDLER
 // ===============================
 function openEnvelope() {
   if (ACTIVE_DAY === 7) return openRoseLetter();
@@ -123,7 +122,186 @@ function openEnvelope() {
 }
 
 // ===============================
-// 📜 LETTER RENDER (SHARED)
+// 🌹 ROSE DAY
+// ===============================
+function openRoseLetter() {
+  openLetter(`
+Happy Rose Day 🌹
+
+This rose didn’t bloom overnight.
+It took its time —
+just like the way you quietly
+made your place in my life.
+
+This isn’t a grand gesture.
+Just a gentle one.
+Like you.
+`);
+}
+
+// 🌹 Rose Garden
+function addRose(x, y) {
+  const rose = document.createElement("img");
+  rose.src = "images/icons/rose.png";
+  rose.className = "rose";
+  rose.style.cssText =
+    `position:absolute;width:${Math.random()*20+35}px;
+     left:${x}px;top:${y}px`;
+  gardenScreen.appendChild(rose);
+}
+
+gardenScreen.addEventListener("click", e => {
+  if (!e.target.closest(".controls")) {
+    addRose(e.clientX, e.clientY);
+  }
+});
+
+function clearGarden() {
+  document.querySelectorAll(".rose").forEach(r => r.remove());
+}
+
+// ===============================
+// 💌 PROPOSE DAY
+// ===============================
+function openProposeGift() {
+  const overlay = document.createElement("div");
+  overlay.style.cssText =
+    "position:fixed;inset:0;background:rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center;z-index:9999";
+
+  const card = document.createElement("div");
+  card.style.cssText =
+    "background:#fff;border-radius:20px;padding:24px;width:300px;text-align:center;font-family:Georgia;color:#6a0572";
+
+  card.innerHTML = `
+    <div style="margin-bottom:14px">💗</div>
+    <div style="background:#ffb6c9;padding:10px;border-radius:999px;cursor:pointer">
+      Some feelings don’t need words yet.
+    </div>
+  `;
+
+  card.onclick = () => {
+    overlay.remove();
+    openUnsentOverlay();
+  };
+
+  overlay.appendChild(card);
+  document.body.appendChild(overlay);
+}
+
+function openProposeFlow() {
+  openLetter(`
+I won’t rush you.
+I won’t pressure you.
+
+But if you ever decide
+to choose someone —
+
+I hope you remember
+how this felt.
+`);
+}
+
+function openUnsentOverlay() {
+  const overlay = document.createElement("div");
+  overlay.style.cssText =
+    "position:fixed;inset:0;background:rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center;z-index:9999";
+
+  const bubble = document.createElement("div");
+  bubble.style.cssText =
+    "background:#fff;border-radius:18px;padding:22px;font-family:Georgia;color:#6a0572";
+  overlay.appendChild(bubble);
+  document.body.appendChild(overlay);
+
+  const msg = "I was going to ask you if—";
+  let i = 0;
+
+  const typer = setInterval(() => {
+    bubble.textContent += msg[i++];
+    if (i >= msg.length) {
+      clearInterval(typer);
+      setTimeout(() => overlay.remove(), 1500);
+    }
+  }, 45);
+}
+
+// ===============================
+// 🍫 CHOCOLATE DAY
+// ===============================
+function openChocolateGift() {
+  const chocolates = [
+    ["🍫 Dairy Milk Silk", "Smooth. Soft. The kind of sweetness that just feels right."],
+    ["🍫 KitKat", "Breaks feel better when they’re shared."],
+    ["🍫 Milky Bar", "Simple sweetness. No complications."],
+    ["🍫 Ferrero Rocher", "A little fancy outside, warm inside."],
+    ["🍫 5 Star", "Messy sometimes. Worth it always."]
+  ];
+
+  const overlay = document.createElement("div");
+  overlay.style.cssText =
+    "position:fixed;inset:0;background:rgba(0,0,0,.55);display:flex;align-items:center;justify-content:center;z-index:9999";
+
+  const box = document.createElement("div");
+  box.style.cssText =
+    "background:#fff;border-radius:22px;padding:24px;width:320px;text-align:center;font-family:Georgia;color:#6a0572";
+
+  box.innerHTML = "<div style='margin-bottom:12px'>Pick a chocolate 🍫</div>";
+
+  chocolates.forEach(([name, msg]) => {
+    const btn = document.createElement("div");
+    btn.textContent = name;
+    btn.style.cssText =
+      "margin:8px 0;padding:10px;border-radius:14px;background:#ffe4ec;cursor:pointer";
+    btn.onclick = e => {
+      e.stopPropagation();
+      showCenteredMessage(msg);
+    };
+    box.appendChild(btn);
+  });
+
+  overlay.appendChild(box);
+  document.body.appendChild(overlay);
+  overlay.onclick = () => overlay.remove();
+}
+
+function openChocolateLetter() {
+  openLetter(`
+Chocolate melts easily.
+But some feelings don’t.
+
+So today is just about sweetness.
+No meanings.
+No expectations.
+
+Just a small pause.
+A lighter moment.
+A quiet smile, if it happens.
+
+And if it does —
+that’s more than enough.
+`);
+}
+
+// ===============================
+// 💗 CENTER MESSAGE
+// ===============================
+function showCenteredMessage(msg) {
+  const overlay = document.createElement("div");
+  overlay.style.cssText =
+    "position:fixed;inset:0;background:rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center;z-index:10000";
+
+  const card = document.createElement("div");
+  card.style.cssText =
+    "background:#fff;border-radius:20px;padding:22px 26px;font-family:Georgia;color:#6a0572;text-align:center";
+  card.textContent = msg;
+
+  overlay.appendChild(card);
+  document.body.appendChild(overlay);
+  burstHearts(innerWidth/2, innerHeight/2);
+  overlay.onclick = () => overlay.remove();
+}
+
+// ===============================
+// 📜 LETTER RENDER
 // ===============================
 function openLetter(message) {
   const overlay = document.createElement("div");
@@ -149,90 +327,4 @@ function openLetter(message) {
   }, 40);
 
   overlay.onclick = () => overlay.remove();
-}
-
-// ===============================
-// 🍫 CHOCOLATE DAY GIFT (CENTER MODAL)
-// ===============================
-function openChocolateGift() {
-  const chocolates = [
-    ["🍫 Dairy Milk Silk", "Smooth. Soft. The kind of sweetness that just feels right."],
-    ["🍫 KitKat", "Breaks feel better when they’re shared."],
-    ["🍫 Milky Bar", "Simple sweetness. No complications."],
-    ["🍫 Ferrero Rocher", "A little fancy outside, warm inside."],
-    ["🍫 5 Star", "Messy sometimes. Worth it always."]
-  ];
-
-  const overlay = document.createElement("div");
-  overlay.style.cssText =
-    "position:fixed;inset:0;background:rgba(0,0,0,.55);display:flex;align-items:center;justify-content:center;z-index:9999";
-
-  const box = document.createElement("div");
-  box.style.cssText =
-    "background:#fff;border-radius:22px;padding:24px;width:320px;text-align:center;font-family:Georgia;color:#6a0572";
-
-  const title = document.createElement("div");
-  title.textContent = "Pick a chocolate 🍫";
-  title.style.marginBottom = "14px";
-
-  box.appendChild(title);
-
-  chocolates.forEach(([name, msg]) => {
-    const btn = document.createElement("div");
-    btn.textContent = name;
-    btn.style.cssText =
-      "margin:8px 0;padding:10px;border-radius:14px;background:#ffe4ec;cursor:pointer";
-
-    btn.onclick = e => {
-      e.stopPropagation();
-      showCenteredMessage(msg);
-    };
-
-    box.appendChild(btn);
-  });
-
-  overlay.appendChild(box);
-  document.body.appendChild(overlay);
-  overlay.onclick = () => overlay.remove();
-}
-
-// ===============================
-// 💗 CENTER MESSAGE MODAL (NEW)
-// ===============================
-function showCenteredMessage(msg) {
-  const overlay = document.createElement("div");
-  overlay.style.cssText =
-    "position:fixed;inset:0;background:rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center;z-index:10000";
-
-  const card = document.createElement("div");
-  card.style.cssText =
-    "background:#fff;border-radius:20px;padding:22px 26px;font-family:Georgia;color:#6a0572;font-size:.95rem;text-align:center";
-
-  card.textContent = msg;
-  overlay.appendChild(card);
-  document.body.appendChild(overlay);
-
-  burstHearts(window.innerWidth / 2, window.innerHeight / 2);
-  overlay.onclick = () => overlay.remove();
-}
-
-// ===============================
-// 🍫 CHOCOLATE DAY LETTER
-// ===============================
-function openChocolateLetter() {
-  openLetter(`
-Chocolate melts easily.
-But some feelings don’t.
-
-So today is just about sweetness.
-No meanings.
-No expectations.
-
-Just a small pause.
-A lighter moment.
-A quiet smile, if it happens.
-
-And if it does —
-that’s more than enough.
-`);
 }
