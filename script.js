@@ -189,8 +189,49 @@ how this felt.
 // 🍫 CHOCOLATE DAY
 // ===============================
 function openChocolateGift() {
-  showCenteredMessage("Chocolate Day 🍫 — sweetness without expectations.");
+  const chocolates = [
+    ["🍫 Dairy Milk Silk", "Smooth. Soft. The kind of sweetness that just feels right."],
+    ["🍫 KitKat", "Breaks feel better when they’re shared."],
+    ["🍫 Milky Bar", "Simple sweetness. No complications."],
+    ["🍫 Ferrero Rocher", "A little fancy outside, warm inside."],
+    ["🍫 5 Star", "Messy sometimes. Worth it always."]
+  ];
+
+  const overlay = document.createElement("div");
+  overlay.style.cssText =
+    "position:fixed;inset:0;background:rgba(0,0,0,.55);display:flex;align-items:center;justify-content:center;z-index:9999";
+
+  const box = document.createElement("div");
+  box.style.cssText =
+    "background:#fff;border-radius:22px;padding:24px;width:320px;text-align:center;font-family:Georgia;color:#6a0572";
+
+  const title = document.createElement("div");
+  title.textContent = "Pick a chocolate 🍫";
+  title.style.marginBottom = "14px";
+  title.style.fontSize = "1rem";
+
+  box.appendChild(title);
+
+  chocolates.forEach(([name, msg]) => {
+    const btn = document.createElement("div");
+    btn.textContent = name;
+    btn.style.cssText =
+      "margin:8px 0;padding:10px;border-radius:14px;background:#ffe4ec;cursor:pointer";
+
+    btn.onclick = e => {
+      e.stopPropagation();
+      showCenteredMessage(msg);
+    };
+
+    box.appendChild(btn);
+  });
+
+  overlay.appendChild(box);
+  document.body.appendChild(overlay);
+
+  overlay.onclick = () => overlay.remove();
 }
+
 
 function openChocolateLetter() {
   openLetter(`
@@ -256,3 +297,4 @@ function openLetter(message) {
 
   overlay.onclick = () => overlay.remove();
 }
+
