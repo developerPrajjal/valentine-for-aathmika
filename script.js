@@ -3,7 +3,7 @@
 // ===============================
 const correctName = "aathmika";
 const correctNick = "petni";
-const PREVIEW_DAY = null; // KEEP NULL FOR LIVE
+const PREVIEW_DAY = null;
 
 // ===============================
 // 🖼️ DAY-WISE PROFILE IMAGES
@@ -11,10 +11,9 @@ const PREVIEW_DAY = null; // KEEP NULL FOR LIVE
 const dayImages = {
   7: "images/her-7.jpeg",
   8: "images/her-8.jpeg",
-  9: "images/her-9.jpeg", // add when ready
+  9: "images/her-9.jpeg",
 };
 
-// ===============================
 let selectedDate = null;
 let autoInterval = null;
 
@@ -25,20 +24,17 @@ function burstHearts(x, y) {
   for (let i = 0; i < 8; i++) {
     const heart = document.createElement("div");
     heart.textContent = "❤️";
-    heart.style.position = "fixed";
-    heart.style.left = x + "px";
-    heart.style.top = y + "px";
-    heart.style.fontSize = "14px";
-    heart.style.pointerEvents = "none";
-    heart.style.transition = "all 0.8s ease-out";
+    heart.style.cssText =
+      `position:fixed;left:${x}px;top:${y}px;font-size:16px;
+       pointer-events:none;transition:all .8s ease-out;z-index:9999`;
     document.body.appendChild(heart);
 
     const angle = Math.random() * Math.PI * 2;
-    const distance = Math.random() * 40 + 20;
+    const dist = Math.random() * 40 + 20;
 
     setTimeout(() => {
       heart.style.transform =
-        `translate(${Math.cos(angle) * distance}px, ${Math.sin(angle) * distance}px) scale(1.5)`;
+        `translate(${Math.cos(angle) * dist}px, ${Math.sin(angle) * dist}px) scale(1.5)`;
       heart.style.opacity = "0";
     }, 10);
 
@@ -51,10 +47,8 @@ function burstHearts(x, y) {
 // ===============================
 function selectDate(day, btn) {
   selectedDate = day;
-
   document.querySelectorAll(".dateButtons button")
     .forEach(b => b.classList.remove("selected"));
-
   btn.classList.add("selected");
 
   const r = btn.getBoundingClientRect();
@@ -66,7 +60,6 @@ function selectDate(day, btn) {
 // ===============================
 function getTodayISTDate() {
   if (PREVIEW_DAY !== null) return PREVIEW_DAY;
-
   return parseInt(
     new Intl.DateTimeFormat("en-IN", {
       timeZone: "Asia/Kolkata",
@@ -77,7 +70,7 @@ function getTodayISTDate() {
 }
 
 // ===============================
-// 🔓 UNLOCK (FINAL LOGIC)
+// 🔓 UNLOCK
 // ===============================
 function unlock() {
   const name = herName.value.toLowerCase().trim();
@@ -99,139 +92,67 @@ function unlock() {
     choiceScreen.classList.remove("hidden");
     window.ACTIVE_DAY = selectedDate;
 
-    const profileImg = document.querySelector(".profilePic");
-    if (dayImages[window.ACTIVE_DAY]) {
-      profileImg.src = dayImages[window.ACTIVE_DAY];
-    }
+    const img = document.querySelector(".profilePic");
+    if (dayImages[selectedDate]) img.src = dayImages[selectedDate];
   } else {
     error.textContent = "Hmm… that doesn’t feel right 💭";
   }
 }
 
 // ===============================
-// 🎁 GIFT (DAY-WISE)
+// 🎁 GIFT HANDLER
 // ===============================
 function openGift() {
-  if (window.ACTIVE_DAY === 7) {
+  if (ACTIVE_DAY === 7) {
     choiceScreen.classList.add("hidden");
     gardenScreen.classList.remove("hidden");
     return;
   }
-
-  if (window.ACTIVE_DAY === 8) {
-    openProposeGift();
-    return;
-  }
-
-  if (window.ACTIVE_DAY === 9) {
-    openChocolateGift();
-    return;
-  }
-
+  if (ACTIVE_DAY === 8) return openProposeGift();
+  if (ACTIVE_DAY === 9) return openChocolateGift();
   alert("This gift opens on the right day 💖");
 }
 
-function goBack() {
-  gardenScreen.classList.add("hidden");
-  choiceScreen.classList.remove("hidden");
-}
-
 // ===============================
-// ✉️ ENVELOPE (DAY-WISE)
+// ✉️ ENVELOPE HANDLER (FIXED)
 // ===============================
 function openEnvelope() {
-  if (window.ACTIVE_DAY === 8) {
-    openProposeFlow();
-    return;
-  }
-
-  if (window.ACTIVE_DAY === 9) {
-    openChocolateLetter();
-    return;
-  }
-
-  if (window.ACTIVE_DAY !== 7) {
-    alert("This letter opens on Rose Day 🌹");
-    return;
-  }
-
-  openRoseLetter();
+  if (ACTIVE_DAY === 7) return openRoseLetter();
+  if (ACTIVE_DAY === 8) return openProposeFlow();
+  if (ACTIVE_DAY === 9) return openChocolateLetter();
 }
 
 // ===============================
-// 🌹 ROSE DAY LETTER
+// 📜 LETTER RENDER (SHARED)
 // ===============================
-function openRoseLetter() {
-  openLetter(`
-Happy Rose Day 🌹
-
-This rose didn’t bloom overnight.
-It took its time —
-just like the way you quietly
-made your place in my life.
-
-This isn’t a grand gesture.
-Just a gentle one.
-Like you.
-`);
-}
-
-// ===============================
-// 💌 PROPOSE DAY FLOW
-// ===============================
-function openProposeFlow() {
+function openLetter(message) {
   const overlay = document.createElement("div");
   overlay.style.cssText =
-    "position:fixed;inset:0;background:rgba(0,0,0,0.6);display:flex;align-items:center;justify-content:center;z-index:999";
+    "position:fixed;inset:0;background:rgba(0,0,0,.6);display:flex;align-items:center;justify-content:center;z-index:9999";
 
-  const card = document.createElement("div");
-  card.style.cssText =
-    "background:#fff;border-radius:18px;padding:25px;width:300px;text-align:center;font-family:Georgia;color:#6a0572";
+  const paper = document.createElement("div");
+  paper.style.cssText =
+    "width:340px;height:520px;background:url('images/icons/letter.png') center/cover no-repeat;border-radius:18px;position:relative";
 
   const text = document.createElement("div");
-  text.textContent = "I have something to tell you…";
-  text.style.marginBottom = "20px";
+  text.style.cssText =
+    "position:absolute;top:102px;left:44px;right:38px;font:13.5px Georgia;line-height:26px;color:#6a1b4d;white-space:pre-wrap";
 
-  const scaredBtn = document.createElement("button");
-  scaredBtn.textContent = "I’m scared 🙈";
-
-  const tellBtn = document.createElement("button");
-  tellBtn.textContent = "Should I tell you? 🥺";
-  tellBtn.style.display = "none";
-
-  scaredBtn.onclick = () => {
-    scaredBtn.style.display = "none";
-    setTimeout(() => tellBtn.style.display = "inline-block", 800);
-  };
-
-  tellBtn.onclick = () => {
-    overlay.remove();
-    openProposeLetter();
-  };
-
-  card.append(text, scaredBtn, tellBtn);
-  overlay.appendChild(card);
+  paper.appendChild(text);
+  overlay.appendChild(paper);
   document.body.appendChild(overlay);
+
+  let i = 0;
+  const typer = setInterval(() => {
+    text.textContent += message[i++];
+    if (i >= message.length) clearInterval(typer);
+  }, 40);
+
+  overlay.onclick = () => overlay.remove();
 }
 
 // ===============================
-// ✍️ PROPOSE LETTER
-// ===============================
-function openProposeLetter() {
-  openLetter(`
-I won’t rush you.
-I won’t pressure you.
-
-But if you ever decide
-to choose someone —
-
-I hope you remember
-how this felt.
-`);
-}
-
-// ===============================
-// 🍫 CHOCOLATE DAY GIFT (9 FEB)
+// 🍫 CHOCOLATE DAY GIFT (CENTER MODAL)
 // ===============================
 function openChocolateGift() {
   const chocolates = [
@@ -244,11 +165,11 @@ function openChocolateGift() {
 
   const overlay = document.createElement("div");
   overlay.style.cssText =
-    "position:fixed;inset:0;background:rgba(0,0,0,0.55);display:flex;align-items:center;justify-content:center;z-index:999";
+    "position:fixed;inset:0;background:rgba(0,0,0,.55);display:flex;align-items:center;justify-content:center;z-index:9999";
 
   const box = document.createElement("div");
   box.style.cssText =
-    "background:#fff;border-radius:22px;padding:24px;width:320px;font-family:Georgia;color:#6a0572;text-align:center";
+    "background:#fff;border-radius:22px;padding:24px;width:320px;text-align:center;font-family:Georgia;color:#6a0572";
 
   const title = document.createElement("div");
   title.textContent = "Pick a chocolate 🍫";
@@ -256,15 +177,15 @@ function openChocolateGift() {
 
   box.appendChild(title);
 
-  chocolates.forEach(([label, msg]) => {
+  chocolates.forEach(([name, msg]) => {
     const btn = document.createElement("div");
-    btn.textContent = label;
+    btn.textContent = name;
     btn.style.cssText =
       "margin:8px 0;padding:10px;border-radius:14px;background:#ffe4ec;cursor:pointer";
 
-    btn.onclick = () => {
-      burstHearts(window.innerWidth / 2, window.innerHeight / 2);
-      alert(msg);
+    btn.onclick = e => {
+      e.stopPropagation();
+      showCenteredMessage(msg);
     };
 
     box.appendChild(btn);
@@ -272,14 +193,31 @@ function openChocolateGift() {
 
   overlay.appendChild(box);
   document.body.appendChild(overlay);
-
-  overlay.onclick = e => {
-    if (e.target === overlay) overlay.remove();
-  };
+  overlay.onclick = () => overlay.remove();
 }
 
 // ===============================
-// 🍫 CHOCOLATE DAY LETTER (9 FEB)
+// 💗 CENTER MESSAGE MODAL (NEW)
+// ===============================
+function showCenteredMessage(msg) {
+  const overlay = document.createElement("div");
+  overlay.style.cssText =
+    "position:fixed;inset:0;background:rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center;z-index:10000";
+
+  const card = document.createElement("div");
+  card.style.cssText =
+    "background:#fff;border-radius:20px;padding:22px 26px;font-family:Georgia;color:#6a0572;font-size:.95rem;text-align:center";
+
+  card.textContent = msg;
+  overlay.appendChild(card);
+  document.body.appendChild(overlay);
+
+  burstHearts(window.innerWidth / 2, window.innerHeight / 2);
+  overlay.onclick = () => overlay.remove();
+}
+
+// ===============================
+// 🍫 CHOCOLATE DAY LETTER
 // ===============================
 function openChocolateLetter() {
   openLetter(`
@@ -297,38 +235,4 @@ A quiet smile, if it happens.
 And if it does —
 that’s more than enough.
 `);
-}
-
-// ===============================
-// 🌹 ROSE GARDEN (UNCHANGED)
-// ===============================
-function addRose(x, y) {
-  const rose = document.createElement("img");
-  rose.src = "images/icons/rose.png";
-  rose.className = "rose";
-  rose.style.width = Math.random() * 20 + 35 + "px";
-  rose.style.left = x + "px";
-  rose.style.top = y + "px";
-  gardenScreen.appendChild(rose);
-}
-
-gardenScreen.addEventListener("click", e => {
-  if (!e.target.closest(".controls")) {
-    addRose(e.clientX, e.clientY);
-  }
-});
-
-function clearGarden() {
-  document.querySelectorAll(".rose").forEach(r => r.remove());
-}
-
-function autoAddRoses() {
-  if (autoInterval) return;
-  autoInterval = setInterval(() => {
-    addRose(Math.random() * innerWidth, Math.random() * innerHeight);
-    if (document.querySelectorAll(".rose").length >= 300) {
-      clearInterval(autoInterval);
-      autoInterval = null;
-    }
-  }, 160);
 }
