@@ -1,4 +1,13 @@
 // ===============================
+// 🔗 DOM BINDINGS (CRITICAL FIX)
+// ===============================
+const lockScreen = document.getElementById("lockScreen");
+const choiceScreen = document.getElementById("choiceScreen");
+const gardenScreen = document.getElementById("gardenScreen");
+const herName = document.getElementById("herName");
+const nickname = document.getElementById("nickname");
+
+// ===============================
 // 🔐 CREDENTIALS
 // ===============================
 const correctName = "aathmika";
@@ -139,20 +148,16 @@ Like you.
 `);
 }
 
-// 🌹 Rose Garden
-function addRose(x, y) {
-  const rose = document.createElement("img");
-  rose.src = "images/icons/rose.png";
-  rose.className = "rose";
-  rose.style.cssText =
-    `position:absolute;width:${Math.random()*20+35}px;
-     left:${x}px;top:${y}px`;
-  gardenScreen.appendChild(rose);
-}
-
+// 🌹 ROSE GARDEN
 gardenScreen.addEventListener("click", e => {
   if (!e.target.closest(".controls")) {
-    addRose(e.clientX, e.clientY);
+    const rose = document.createElement("img");
+    rose.src = "images/icons/rose.png";
+    rose.className = "rose";
+    rose.style.cssText =
+      `position:absolute;width:${Math.random()*20+35}px;
+       left:${e.clientX}px;top:${e.clientY}px`;
+    gardenScreen.appendChild(rose);
   }
 });
 
@@ -164,28 +169,7 @@ function clearGarden() {
 // 💌 PROPOSE DAY
 // ===============================
 function openProposeGift() {
-  const overlay = document.createElement("div");
-  overlay.style.cssText =
-    "position:fixed;inset:0;background:rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center;z-index:9999";
-
-  const card = document.createElement("div");
-  card.style.cssText =
-    "background:#fff;border-radius:20px;padding:24px;width:300px;text-align:center;font-family:Georgia;color:#6a0572";
-
-  card.innerHTML = `
-    <div style="margin-bottom:14px">💗</div>
-    <div style="background:#ffb6c9;padding:10px;border-radius:999px;cursor:pointer">
-      Some feelings don’t need words yet.
-    </div>
-  `;
-
-  card.onclick = () => {
-    overlay.remove();
-    openUnsentOverlay();
-  };
-
-  overlay.appendChild(card);
-  document.body.appendChild(overlay);
+  showCenteredMessage("Some feelings don’t need words yet.");
 }
 
 function openProposeFlow() {
@@ -201,66 +185,11 @@ how this felt.
 `);
 }
 
-function openUnsentOverlay() {
-  const overlay = document.createElement("div");
-  overlay.style.cssText =
-    "position:fixed;inset:0;background:rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center;z-index:9999";
-
-  const bubble = document.createElement("div");
-  bubble.style.cssText =
-    "background:#fff;border-radius:18px;padding:22px;font-family:Georgia;color:#6a0572";
-  overlay.appendChild(bubble);
-  document.body.appendChild(overlay);
-
-  const msg = "I was going to ask you if—";
-  let i = 0;
-
-  const typer = setInterval(() => {
-    bubble.textContent += msg[i++];
-    if (i >= msg.length) {
-      clearInterval(typer);
-      setTimeout(() => overlay.remove(), 1500);
-    }
-  }, 45);
-}
-
 // ===============================
 // 🍫 CHOCOLATE DAY
 // ===============================
 function openChocolateGift() {
-  const chocolates = [
-    ["🍫 Dairy Milk Silk", "Smooth. Soft. The kind of sweetness that just feels right."],
-    ["🍫 KitKat", "Breaks feel better when they’re shared."],
-    ["🍫 Milky Bar", "Simple sweetness. No complications."],
-    ["🍫 Ferrero Rocher", "A little fancy outside, warm inside."],
-    ["🍫 5 Star", "Messy sometimes. Worth it always."]
-  ];
-
-  const overlay = document.createElement("div");
-  overlay.style.cssText =
-    "position:fixed;inset:0;background:rgba(0,0,0,.55);display:flex;align-items:center;justify-content:center;z-index:9999";
-
-  const box = document.createElement("div");
-  box.style.cssText =
-    "background:#fff;border-radius:22px;padding:24px;width:320px;text-align:center;font-family:Georgia;color:#6a0572";
-
-  box.innerHTML = "<div style='margin-bottom:12px'>Pick a chocolate 🍫</div>";
-
-  chocolates.forEach(([name, msg]) => {
-    const btn = document.createElement("div");
-    btn.textContent = name;
-    btn.style.cssText =
-      "margin:8px 0;padding:10px;border-radius:14px;background:#ffe4ec;cursor:pointer";
-    btn.onclick = e => {
-      e.stopPropagation();
-      showCenteredMessage(msg);
-    };
-    box.appendChild(btn);
-  });
-
-  overlay.appendChild(box);
-  document.body.appendChild(overlay);
-  overlay.onclick = () => overlay.remove();
+  showCenteredMessage("Chocolate Day 🍫 — sweetness without expectations.");
 }
 
 function openChocolateLetter() {
@@ -287,7 +216,7 @@ that’s more than enough.
 function showCenteredMessage(msg) {
   const overlay = document.createElement("div");
   overlay.style.cssText =
-    "position:fixed;inset:0;background:rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center;z-index:10000";
+    "position:fixed;inset:0;background:rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center;z-index:9999";
 
   const card = document.createElement("div");
   card.style.cssText =
@@ -296,7 +225,6 @@ function showCenteredMessage(msg) {
 
   overlay.appendChild(card);
   document.body.appendChild(overlay);
-  burstHearts(innerWidth/2, innerHeight/2);
   overlay.onclick = () => overlay.remove();
 }
 
