@@ -11,6 +11,7 @@ const PREVIEW_DAY = null; // KEEP NULL FOR LIVE
 const dayImages = {
   7: "images/her-7.jpeg",
   8: "images/her-8.jpeg",
+  9: "images/her-9.jpeg", // add when ready
 };
 
 // ===============================
@@ -88,7 +89,6 @@ function unlock() {
     return;
   }
 
-  // ✅ FIXED RULE: block ONLY future days
   if (selectedDate > getTodayISTDate()) {
     alert("Umm I see you are trying to be smart!! But you gotta wait!! 😌");
     return;
@@ -99,7 +99,6 @@ function unlock() {
     choiceScreen.classList.remove("hidden");
     window.ACTIVE_DAY = selectedDate;
 
-    // Update profile pic
     const profileImg = document.querySelector(".profilePic");
     if (dayImages[window.ACTIVE_DAY]) {
       profileImg.src = dayImages[window.ACTIVE_DAY];
@@ -124,6 +123,11 @@ function openGift() {
     return;
   }
 
+  if (window.ACTIVE_DAY === 9) {
+    openChocolateGift();
+    return;
+  }
+
   alert("This gift opens on the right day 💖");
 }
 
@@ -138,6 +142,11 @@ function goBack() {
 function openEnvelope() {
   if (window.ACTIVE_DAY === 8) {
     openProposeFlow();
+    return;
+  }
+
+  if (window.ACTIVE_DAY === 9) {
+    openChocolateLetter();
     return;
   }
 
@@ -222,117 +231,76 @@ how this felt.
 }
 
 // ===============================
-// 💗 PROPOSE DAY GIFT
+// 🍫 CHOCOLATE DAY GIFT (9 FEB)
 // ===============================
-function openProposeGift() {
+function openChocolateGift() {
+  const chocolates = [
+    ["🍫 Dairy Milk Silk", "Smooth. Soft. The kind of sweetness that just feels right."],
+    ["🍫 KitKat", "Breaks feel better when they’re shared."],
+    ["🍫 Milky Bar", "Simple sweetness. No complications."],
+    ["🍫 Ferrero Rocher", "A little fancy outside, warm inside."],
+    ["🍫 5 Star", "Messy sometimes. Worth it always."]
+  ];
+
   const overlay = document.createElement("div");
   overlay.style.cssText =
-    "position:fixed;inset:0;background:rgba(0,0,0,0.5);display:flex;align-items:center;justify-content:center;z-index:999";
+    "position:fixed;inset:0;background:rgba(0,0,0,0.55);display:flex;align-items:center;justify-content:center;z-index:999";
 
-  const card = document.createElement("div");
-  card.style.cssText =
-    "background:linear-gradient(135deg,#fff,#ffe4ec);border-radius:22px;padding:30px;width:300px;text-align:center;font-family:Georgia;color:#6a0572;box-shadow:0 10px 30px rgba(0,0,0,0.25)";
+  const box = document.createElement("div");
+  box.style.cssText =
+    "background:#fff;border-radius:22px;padding:24px;width:320px;font-family:Georgia;color:#6a0572;text-align:center";
 
-  const heart = document.createElement("div");
-  heart.textContent = "💗";
-  heart.style.fontSize = "64px";
-  heart.style.marginBottom = "18px";
-  heart.style.animation = "pulse 1.5s infinite";
+  const title = document.createElement("div");
+  title.textContent = "Pick a chocolate 🍫";
+  title.style.marginBottom = "14px";
 
-  const hintBtn = document.createElement("div");
-  hintBtn.textContent = "Some feelings don’t need words yet.";
-  hintBtn.style.cssText =
-    "display:inline-block;background:#ffb6c9;color:#7a003c;padding:10px 16px;border-radius:999px;font-size:0.85rem;cursor:pointer";
+  box.appendChild(title);
 
-  card.append(heart, hintBtn);
-  overlay.appendChild(card);
+  chocolates.forEach(([label, msg]) => {
+    const btn = document.createElement("div");
+    btn.textContent = label;
+    btn.style.cssText =
+      "margin:8px 0;padding:10px;border-radius:14px;background:#ffe4ec;cursor:pointer";
+
+    btn.onclick = () => {
+      burstHearts(window.innerWidth / 2, window.innerHeight / 2);
+      alert(msg);
+    };
+
+    box.appendChild(btn);
+  });
+
+  overlay.appendChild(box);
   document.body.appendChild(overlay);
 
-  const style = document.createElement("style");
-  style.textContent = `
-    @keyframes pulse {
-      0% { transform: scale(1); opacity: .85; }
-      50% { transform: scale(1.15); opacity: 1; }
-      100% { transform: scale(1); opacity: .85; }
-    }
-  `;
-  document.head.appendChild(style);
-
-  hintBtn.onclick = () => {
-    overlay.remove();
-    openUnsentOverlay();
+  overlay.onclick = e => {
+    if (e.target === overlay) overlay.remove();
   };
 }
 
-function openUnsentOverlay() {
-  const overlay = document.createElement("div");
-  overlay.style.cssText =
-    "position:fixed;inset:0;background:rgba(0,0,0,0.5);display:flex;align-items:center;justify-content:center;z-index:999";
+// ===============================
+// 🍫 CHOCOLATE DAY LETTER (9 FEB)
+// ===============================
+function openChocolateLetter() {
+  openLetter(`
+Chocolate melts easily.
+But some feelings don’t.
 
-  const bubble = document.createElement("div");
-  bubble.style.cssText =
-    "background:#fff;border-radius:20px;padding:22px 26px;font-family:Georgia;color:#6a0572;font-size:0.95rem";
+So today is just about sweetness.
+No meanings.
+No expectations.
 
-  overlay.appendChild(bubble);
-  document.body.appendChild(overlay);
+Just a small pause.
+A lighter moment.
+A quiet smile, if it happens.
 
-  const msg = "I was going to ask you if—";
-  let i = 0;
-
-  const typer = setInterval(() => {
-    bubble.textContent += msg[i++];
-    if (i >= msg.length) {
-      clearInterval(typer);
-      setTimeout(() => eraseMessage(bubble, overlay), 900);
-    }
-  }, 45);
-}
-
-function eraseMessage(bubble, overlay) {
-  let text = bubble.textContent;
-
-  const eraser = setInterval(() => {
-    text = text.slice(0, -1);
-    bubble.textContent = text;
-    if (!text.length) {
-      clearInterval(eraser);
-      bubble.textContent = "Not today.";
-      setTimeout(() => overlay.remove(), 1200);
-    }
-  }, 35);
+And if it does —
+that’s more than enough.
+`);
 }
 
 // ===============================
-// 📜 LETTER RENDER
-// ===============================
-function openLetter(message) {
-  const overlay = document.createElement("div");
-  overlay.style.cssText =
-    "position:fixed;inset:0;background:rgba(0,0,0,0.6);display:flex;align-items:center;justify-content:center;z-index:999";
-
-  const paper = document.createElement("div");
-  paper.style.cssText =
-    "width:340px;height:520px;background:url('images/icons/letter.png') no-repeat center/cover;border-radius:18px;position:relative";
-
-  const text = document.createElement("div");
-  text.style.cssText =
-    "position:absolute;top:102px;left:44px;right:38px;font:13.5px Georgia;line-height:26px;color:#6a1b4d;white-space:pre-wrap";
-
-  paper.appendChild(text);
-  overlay.appendChild(paper);
-  document.body.appendChild(overlay);
-
-  let i = 0;
-  const typer = setInterval(() => {
-    text.textContent += message[i++];
-    if (i >= message.length) clearInterval(typer);
-  }, 40);
-
-  overlay.onclick = () => overlay.remove();
-}
-
-// ===============================
-// 🌹 ROSE GARDEN
+// 🌹 ROSE GARDEN (UNCHANGED)
 // ===============================
 function addRose(x, y) {
   const rose = document.createElement("img");
