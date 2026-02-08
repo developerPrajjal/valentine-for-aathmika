@@ -160,6 +160,43 @@ gardenScreen.addEventListener("click", e => {
     gardenScreen.appendChild(rose);
   }
 });
+// ===============================
+// 🌹 ROSE GARDEN CONTROLS FIX
+// ===============================
+function autoAddRoses() {
+  if (autoInterval) return;
+
+  autoInterval = setInterval(() => {
+    const x = Math.random() * window.innerWidth;
+    const y = Math.random() * window.innerHeight;
+
+    const rose = document.createElement("img");
+    rose.src = "images/icons/rose.png";
+    rose.className = "rose";
+    rose.style.cssText =
+      `position:absolute;width:${Math.random()*20+35}px;
+       left:${x}px;top:${y}px`;
+
+    gardenScreen.appendChild(rose);
+
+    if (document.querySelectorAll(".rose").length >= 250) {
+      clearInterval(autoInterval);
+      autoInterval = null;
+    }
+  }, 150);
+}
+
+function goBack() {
+  // stop auto add if running
+  if (autoInterval) {
+    clearInterval(autoInterval);
+    autoInterval = null;
+  }
+
+  gardenScreen.classList.add("hidden");
+  choiceScreen.classList.remove("hidden");
+}
+
 
 function clearGarden() {
   document.querySelectorAll(".rose").forEach(r => r.remove());
@@ -297,4 +334,5 @@ function openLetter(message) {
 
   overlay.onclick = () => overlay.remove();
 }
+
 
