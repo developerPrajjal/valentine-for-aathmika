@@ -8,12 +8,10 @@
 </head>
 <body>
 
-<!-- FLOATING HEARTS LAYER -->
+<!-- FLOATING HEARTS -->
 <div id="hearts"></div>
 
-<!-- ===============================
-     🔐 LOCK SCREEN
-================================ -->
+<!-- 🔐 LOCK SCREEN -->
 <div class="container" id="lockScreen">
   <h1>Before you enter… 💌</h1>
 
@@ -23,65 +21,65 @@
   <p class="small">Select today 💭</p>
 
   <div class="dateButtons">
-    <button type="button" onclick="selectDate(7, this)">7 Feb</button>
-    <button type="button" onclick="selectDate(8, this)">8 Feb</button>
-    <button type="button" onclick="selectDate(9, this)">9 Feb</button>
-    <button type="button" onclick="selectDate(10, this)">10 Feb</button>
-    <button type="button" onclick="selectDate(11, this)">11 Feb</button>
-    <button type="button" onclick="selectDate(12, this)">12 Feb</button>
-    <button type="button" onclick="selectDate(13, this)">13 Feb</button>
-    <button type="button" onclick="selectDate(14, this)">14 Feb</button>
+    <button onclick="selectDate(7,this)">7 Feb</button>
+    <button onclick="selectDate(8,this)">8 Feb</button>
+    <button onclick="selectDate(9,this)">9 Feb</button>
+    <button onclick="selectDate(10,this)">10 Feb</button>
+    <button onclick="selectDate(11,this)">11 Feb</button>
+    <button onclick="selectDate(12,this)">12 Feb</button>
+    <button onclick="selectDate(13,this)">13 Feb</button>
+    <button onclick="selectDate(14,this)">14 Feb</button>
   </div>
 
-  <button class="enterBtn" type="button" onclick="unlock()">Enter</button>
+  <button class="enterBtn" onclick="unlock()">Enter</button>
   <p id="error"></p>
 </div>
 
-<!-- ===============================
-     💖 CHOICE SCREEN
-================================ -->
+<!-- 💖 CHOICE SCREEN -->
 <div class="container hidden" id="choiceScreen">
-  <img src="images/her-7.jpeg" class="profilePic" alt="Her picture" />
+
+  <img src="images/her-7.jpeg" class="profilePic" />
+
   <h2>Something for you 💖</h2>
 
-  <div class="choices">
-    <!-- 🎁 Gift -->
-    <img
-      src="images/icons/gift.png"
-      alt="Gift"
-      onclick="openGift()"
-    />
+  <!-- 🧸 TEDDY DAY (ONLY 10TH FEB) -->
+  <div id="teddySection" class="hidden" style="position:relative; z-index:5;">
+    <h2 class="teddyTitle">Teddy Day 🧸</h2>
 
-    <!-- ✉️ Envelope -->
-    <img
-      src="images/icons/envelope1.png"
-      alt="Envelope"
-      onclick="openEnvelope()"
-    />
+    <div class="teddyWrapper">
+      <img src="images/teddy.png" class="teddyIdle" />
+    </div>
+
+    <div class="teddyActions">
+      <button type="button" onclick="openTeddySit()">Sit here</button>
+      <button type="button" onclick="openTeddyHold()">Hold this</button>
+      <button type="button" onclick="openTeddyExplore()">Explore</button>
+      <button type="button" onclick="openCatchTeddyGame()">Catch the Teddy 🎮</button>
+    </div>
   </div>
+
+  <!-- 🎁 ✉️ COMMON BUTTONS -->
+  <div class="choices" style="position:relative; z-index:3;">
+    <img src="images/icons/gift.png" onclick="openGift()" />
+    <img src="images/icons/envelope1.png" onclick="openEnvelope()" />
+  </div>
+
 </div>
 
-<!-- ===============================
-     🌹 ROSE GARDEN
-================================ -->
+<!-- 🌹 ROSE GARDEN -->
 <div id="gardenScreen" class="hidden">
   <div class="controls">
-    <button type="button" onclick="goBack()">← Back</button>
-    <button type="button" onclick="clearGarden()">Clear Garden</button>
-    <button type="button" onclick="autoAddRoses()">Auto-Add 🌹</button>
+    <button onclick="goBack()">← Back</button>
+    <button onclick="clearGarden()">Clear Garden</button>
+    <button onclick="autoAddRoses()">Auto-Add 🌹</button>
   </div>
 </div>
 
-<!-- ===============================
-     🎵 BACKGROUND MUSIC
-================================ -->
+<!-- 🎵 MUSIC -->
 <audio id="bgMusic" loop>
   <source src="music.mp3" type="audio/mpeg" />
 </audio>
 
-<!-- ===============================
-     📜 SCRIPT
-================================ -->
 <script src="script.js"></script>
 </body>
 </html>
