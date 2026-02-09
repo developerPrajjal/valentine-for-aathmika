@@ -13,7 +13,7 @@ const error = document.getElementById("error");
 // ===============================
 const correctName = "aathmika";
 const correctNick = "petni";
-const PREVIEW_DAY = 10;
+const PREVIEW_DAY = null;
 
 // ===============================
 // 🖼️ DAY-WISE PROFILE IMAGES
@@ -525,4 +525,5 @@ function openCatchTeddyGame() {
     }, 2200);
   }
 }
+
 
