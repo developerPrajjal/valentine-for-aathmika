@@ -628,3 +628,21 @@ button {
     opacity: 1;
   }
 }
+/* 🧸 Teddy Day section must be clickable */
+#teddySection {
+  position: relative;
+  z-index: 20;
+}
+
+/* Teddy buttons must receive clicks */
+.teddyActions button {
+  position: relative;
+  z-index: 25;
+  pointer-events: auto;
+  cursor: pointer;
+}
+
+/* Floating hearts should NEVER block clicks */
+#hearts {
+  pointer-events: none;
+}
