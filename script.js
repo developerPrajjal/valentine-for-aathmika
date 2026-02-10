@@ -13,7 +13,7 @@ const error = document.getElementById("error");
 // ===============================
 const correctName = "aathmika";
 const correctNick = "petni";
-const PREVIEW_DAY = null;
+const PREVIEW_DAY = 11;
 
 // ===============================
 // 🖼️ DAY-WISE PROFILE IMAGES
@@ -22,12 +22,12 @@ const dayImages = {
   7: "images/her-7.jpeg",
   8: "images/her-8.jpeg",
   9: "images/her-9.jpeg",
-  10: "images/her-10.jpeg"
+  10: "images/her-10.jpeg",
+  11: "images/her-11.jpeg"
 };
 
 // ✅ SINGLE SOURCE OF TRUTH
 let ACTIVE_DAY = null;
-
 let selectedDate = null;
 let autoInterval = null;
 
@@ -96,7 +96,7 @@ function unlock() {
   }
 
   if (selectedDate > getTodayISTDate()) {
-    alert("Umm I see you are trying to be smart!! But you gotta wait!! 😌");
+    alert("You gotta wait 😌");
     return;
   }
 
@@ -104,7 +104,7 @@ function unlock() {
     lockScreen.classList.add("hidden");
     choiceScreen.classList.remove("hidden");
 
-    ACTIVE_DAY = selectedDate; // ✅ FIX
+    ACTIVE_DAY = selectedDate;
 
     const img = document.querySelector(".profilePic");
     if (dayImages[ACTIVE_DAY]) img.src = dayImages[ACTIVE_DAY];
@@ -132,6 +132,7 @@ function openGift() {
   if (ACTIVE_DAY === 8) return openProposeGift();
   if (ACTIVE_DAY === 9) return openChocolateGift();
   if (ACTIVE_DAY === 10) return openTeddyGift();
+  if (ACTIVE_DAY === 11) return openPromiseDayCard();
 }
 
 // ===============================
@@ -142,6 +143,7 @@ function openEnvelope() {
   if (ACTIVE_DAY === 8) return openProposeLetter();
   if (ACTIVE_DAY === 9) return openChocolateLetter();
   if (ACTIVE_DAY === 10) return openTeddyLetter();
+  if (ACTIVE_DAY === 11) return openPromiseDayLetter();
 }
 
 // ===============================
@@ -160,47 +162,6 @@ This isn’t a grand gesture.
 Just a gentle one.
 Like you.
 `);
-}
-
-// ===============================
-// 🌹 ROSE GARDEN
-// ===============================
-gardenScreen.addEventListener("click", e => {
-  if (!e.target.closest(".controls")) addRose(e.clientX, e.clientY);
-});
-
-function addRose(x, y) {
-  const rose = document.createElement("img");
-  rose.src = "images/icons/rose.png";
-  rose.className = "rose";
-  rose.style.cssText =
-    `position:absolute;width:${Math.random()*20+35}px;left:${x}px;top:${y}px`;
-  gardenScreen.appendChild(rose);
-}
-
-function autoAddRoses() {
-  if (autoInterval) return;
-  autoInterval = setInterval(() => {
-    addRose(
-      Math.random() * window.innerWidth,
-      Math.random() * window.innerHeight
-    );
-    if (document.querySelectorAll(".rose").length >= 250) {
-      clearInterval(autoInterval);
-      autoInterval = null;
-    }
-  }, 150);
-}
-
-function clearGarden() {
-  document.querySelectorAll(".rose").forEach(r => r.remove());
-}
-
-function goBack() {
-  if (autoInterval) clearInterval(autoInterval);
-  autoInterval = null;
-  gardenScreen.classList.add("hidden");
-  choiceScreen.classList.remove("hidden");
 }
 
 // ===============================
@@ -228,11 +189,11 @@ how this felt.
 // ===============================
 function openChocolateGift() {
   const chocolates = [
-    ["🍫 Dairy Milk Silk", "Smooth. Soft. The kind of sweetness that just feels right."],
+    ["🍫 Dairy Milk Silk", "I might not always say the right thing.\nBut I’ll never pretend."],
     ["🍫 KitKat", "Breaks feel better when they’re shared."],
-    ["🍫 Milky Bar", "Simple sweetness. No complications."],
-    ["🍫 Ferrero Rocher", "A little fancy outside, warm inside."],
-    ["🍫 5 Star", "Messy sometimes. Worth it always."]
+    ["🍫 Milky Bar", "Simple sweetness.\nNo complications."],
+    ["🍫 Ferrero Rocher", "A little fancy outside.\nWarm inside."],
+    ["🍫 5 Star", "Messy sometimes.\nWorth it always."]
   ];
 
   const overlay = document.createElement("div");
@@ -272,8 +233,7 @@ No meanings.
 No expectations.
 
 Just a small pause.
-A lighter moment.
-A quiet smile, if it happens.
+A quiet smile.
 `);
 }
 
@@ -295,7 +255,7 @@ that’s okay too.
 }
 
 function openTeddySit() {
-  showCenteredMessage("Sit here. Breathe. I’ve got you. 🧸");
+  showCenteredMessage("Sit here.\nBreathe.\nI’ve got you. 🧸");
 }
 
 function openTeddyHold() {
@@ -308,9 +268,6 @@ Teddy Day 🧸
 
 This isn’t about toys.
 It’s about comfort.
-
-About the feeling that
-someone thought of you.
 
 And that…
 is sometimes enough.
@@ -359,171 +316,138 @@ function openLetter(message) {
   const typer = setInterval(() => {
     text.textContent += message[i++];
     if (i >= message.length) clearInterval(typer);
-  }, 40);
+  }, 35);
 
   overlay.onclick = () => overlay.remove();
 }
 
 // ===============================
-// 🧸 CATCH THE TEDDY – MINI GAME (PATCHED, SAFE)
+// 🤍 PROMISE DAY – FIXED & COMPLETE
 // ===============================
-function openCatchTeddyGame() {
-  if (ACTIVE_DAY !== 10) return;
+function openPromiseDayCard() {
+  if (ACTIVE_DAY !== 11) return;
 
-  const bgMusic = document.getElementById("bgMusic");
-  if (bgMusic && !bgMusic.paused) bgMusic.pause();
-
-  let score = 0;
-  let timeLeft = 60;
-  let gameInterval = null;
-  let dropInterval = null;
-  let gameActive = true;
-
-  const highScoreKey = "teddy_high_score";
-  const prevHigh = parseInt(localStorage.getItem(highScoreKey) || "0");
-
-  // Overlay (CENTER FIXED)
   const overlay = document.createElement("div");
   overlay.style.cssText =
     "position:fixed;inset:0;background:rgba(0,0,0,.6);display:flex;align-items:center;justify-content:center;z-index:10000";
 
-  // Game Box
-  const box = document.createElement("div");
-  box.style.cssText =
-    "width:320px;height:420px;background:#ffeef5;border-radius:24px;position:relative;overflow:hidden;font-family:Georgia;text-align:center";
+  const card = document.createElement("div");
+  card.style.cssText =
+    "width:320px;height:440px;perspective:1000px;font-family:Georgia";
 
-  // Header
-  const header = document.createElement("div");
-  header.style.cssText =
-    "padding:10px;font-size:.9rem;color:#6a0572;display:flex;justify-content:space-between";
-  header.innerHTML = `<span>Score: <b id="tScore">0</b></span>
-                      <span>High: ${prevHigh}</span>`;
+  const inner = document.createElement("div");
+  inner.style.cssText =
+    "width:100%;height:100%;position:relative;transform-style:preserve-3d;transition:transform .7s";
 
-  // Timer
-  const timer = document.createElement("div");
-  timer.style.cssText = "font-size:.8rem;color:#6a0572;margin-bottom:4px";
-  timer.textContent = "Time: 60s";
+  // FRONT
+  const front = document.createElement("div");
+  front.style.cssText =
+    "position:absolute;inset:0;background:#fff;border-radius:26px;backface-visibility:hidden;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px";
 
-  // Play Area
-  const playArea = document.createElement("div");
-  playArea.style.cssText =
-    "position:absolute;top:70px;bottom:60px;left:0;right:0";
+  front.innerHTML = `
+    <h2 style="color:#6a0572;">Happy Promise Day 🤍</h2>
+    <p style="margin-top:12px;color:#8a3a78;">Tap to open the card</p>
+  `;
 
-  // Basket
-  const basket = document.createElement("div");
-  basket.style.cssText =
-    "position:absolute;bottom:10px;left:120px;width:70px;height:30px;background:#f7c6d8;border-radius:0 0 20px 20px;transition:.1s";
+  // BACK
+  const back = document.createElement("div");
+  back.style.cssText =
+    "position:absolute;inset:0;background:#fff;border-radius:26px;backface-visibility:hidden;transform:rotateY(180deg);padding:18px;overflow:auto";
 
-  playArea.appendChild(basket);
+  back.innerHTML = `
+    <h3 style="text-align:center;color:#6a0572;margin-bottom:10px;">
+      Not all promises are loud.
+    </h3>
 
-  // Close Button
-  const closeBtn = document.createElement("div");
-  closeBtn.textContent = "✕";
-  closeBtn.style.cssText =
-    "position:absolute;top:8px;right:12px;cursor:pointer;color:#6a0572";
+    <div id="promiseArea" style="margin-bottom:14px;">
+      <button class="pBtn">Promise 1 · Honesty</button>
+      <button class="pBtn">Promise 2 · Patience</button>
+      <button class="pBtn">Promise 3 · Respect</button>
+    </div>
 
-  closeBtn.onclick = endGame;
+    <div id="promiseMsg" style="
+      display:none;
+      padding:14px;
+      border-radius:14px;
+      background:#fff6fa;
+      color:#6a0572;
+      font-size:.9rem;
+      line-height:1.5;
+      white-space:pre-line;
+      margin-bottom:14px;
+    "></div>
 
-  box.append(header, timer, closeBtn, playArea);
-  overlay.appendChild(box);
+    <div style="
+      padding:14px;
+      border-radius:14px;
+      background:#fff0f5;
+      font-size:.85rem;
+      color:#6a0572;
+    ">
+      <b>Can I make you some more promises?</b><br><br>
+      What would you want me<br>
+      to carry forward — no matter what?
+      <br><br>
+      <small>
+        Please answer this via WhatsApp inbox.<br>
+        I’ll do it for you — and I won’t break those promises. Ever.
+      </small>
+    </div>
+  `;
+
+  inner.append(front, back);
+  card.appendChild(inner);
+  overlay.appendChild(card);
   document.body.appendChild(overlay);
 
-  // Basket movement
-  function moveBasket(x) {
-    const rect = playArea.getBoundingClientRect();
-    let pos = x - rect.left - 35;
-    pos = Math.max(0, Math.min(pos, rect.width - 70));
-    basket.style.left = pos + "px";
-  }
+  front.onclick = () => (inner.style.transform = "rotateY(180deg)");
 
-  playArea.addEventListener("mousemove", e => moveBasket(e.clientX));
-  playArea.addEventListener("touchmove", e => moveBasket(e.touches[0].clientX));
+  const buttons = back.querySelectorAll(".pBtn");
+  const msgBox = back.querySelector("#promiseMsg");
 
-  // Drop teddy
-  function dropTeddy() {
-    const teddy = document.createElement("div");
-    teddy.textContent = "🧸";
-    teddy.style.cssText =
-      `position:absolute;top:-30px;left:${Math.random()*260}px;font-size:26px;transition:top 2.8s linear`;
+  buttons[0].onclick = () => {
+    msgBox.style.display = "block";
+    msgBox.textContent =
+      "I might not always say the right thing.\nBut I’ll never pretend.";
+  };
 
-    playArea.appendChild(teddy);
-    setTimeout(() => teddy.style.top = "100%", 20);
+  buttons[1].onclick = () => {
+    msgBox.style.display = "block";
+    msgBox.textContent = "Some things take time.\nAnd I’m okay with that.";
+  };
 
-    const fallCheck = setInterval(() => {
-      if (!gameActive) {
-        clearInterval(fallCheck);
-        teddy.remove();
-        return;
-      }
+  buttons[2].onclick = () => {
+    msgBox.style.display = "block";
+    msgBox.textContent =
+      "No matter what this becomes,\nyour feelings will never be a joke to me.";
+  };
 
-      const tRect = teddy.getBoundingClientRect();
-      const bRect = basket.getBoundingClientRect();
-
-      if (
-        tRect.bottom >= bRect.top &&
-        tRect.left < bRect.right &&
-        tRect.right > bRect.left
-      ) {
-        clearInterval(fallCheck);
-        teddy.remove();
-        score++;
-        document.getElementById("tScore").textContent = score;
-
-        basket.style.transform = "scale(1.1)";
-        setTimeout(() => basket.style.transform = "scale(1)", 120);
-      }
-    }, 50);
-
-    setTimeout(() => {
-      clearInterval(fallCheck);
-      teddy.remove();
-    }, 3000);
-  }
-
-  // Timer
-  gameInterval = setInterval(() => {
-    timeLeft--;
-    timer.textContent = `Time: ${timeLeft}s`;
-    if (timeLeft <= 0) endGame();
-  }, 1000);
-
-  dropInterval = setInterval(dropTeddy, 900);
-
-  function endGame() {
-    if (!gameActive) return;
-    gameActive = false;
-
-    clearInterval(gameInterval);
-    clearInterval(dropInterval);
-
-    // DIM GAME + SHOW RESULT ON TOP
-    box.style.filter = "blur(3px) brightness(0.8)";
-
-    const result = document.createElement("div");
-    result.style.cssText =
-      "position:absolute;inset:0;display:flex;align-items:center;justify-content:center;z-index:2";
-
-    const msg = document.createElement("div");
-    msg.style.cssText =
-      "background:#fff;padding:22px 28px;border-radius:18px;font-family:Georgia;color:#6a0572;text-align:center";
-
-    if (score > prevHigh) {
-      localStorage.setItem(highScoreKey, score);
-      msg.textContent =
-        "Hurray!! 🎉\nNew High Score!!\nI see you’re getting better and better 🧸🤍";
-    } else {
-      msg.textContent =
-        "That was cute 🧸\nWanna try once more?";
-    }
-
-    result.appendChild(msg);
-    box.appendChild(result);
-
-    setTimeout(() => {
-      overlay.remove();
-      if (bgMusic) bgMusic.play();
-    }, 2200);
-  }
+  overlay.onclick = e => {
+    if (e.target === overlay) overlay.remove();
+  };
 }
 
 
+// ===============================
+// ✉️ PROMISE DAY LETTER
+// ===============================
+function openPromiseDayLetter() {
+  openLetter(`
+Happy Promise Day 🤍
+
+I don’t want to promise
+things I can’t keep.
+
+But I want to promise
+things that matter.
+
+So tell me —
+what are the promises
+you’d want me to hold onto?
+
+Reply to this on WhatsApp.
+I’ll listen.
+I’ll remember.
+And I won’t break them.
+`);
+}
