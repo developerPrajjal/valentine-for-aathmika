@@ -316,6 +316,7 @@ button {
   height: 140px;
   border-radius: 50%;
   object-fit: cover;
+  object-position: top center;
   margin-bottom: 15px;
 }
 
