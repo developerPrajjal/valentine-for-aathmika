@@ -24,7 +24,9 @@ const dayImages = {
   9: "images/her-9.jpeg",
   10: "images/her-10.jpeg",
   11: "images/her-11.jpeg",
-  12: "images/her-12.jpeg"
+  12: "images/her-12.jpeg",
+  13: "images/her-13.jpeg",
+  14: "images/her-14.jpeg"
 };
 
 // ✅ SINGLE SOURCE OF TRUTH
@@ -783,4 +785,5 @@ And peace.`;
 
   overlay.onclick = () => overlay.remove();
 }
+
 
