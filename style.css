@@ -312,13 +312,13 @@ button {
 
 /* ---------- Choice Page ---------- */
 .profilePic {
-  width: 140px;
-  height: 140px;
+  width: 160px;
+  height: 160px;
   border-radius: 50%;
   object-fit: cover;
-  object-position: top center;
-  margin-bottom: 15px;
+  object-position: center top;
 }
+
 
 .choices {
   display: flex;
